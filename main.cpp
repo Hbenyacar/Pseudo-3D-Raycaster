@@ -5,6 +5,9 @@
 #include <array>
 #include <sys/select.h>
 #include <termios.h>
+#include <iomanip>
+#include "Direction.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -60,6 +63,8 @@ int main() {
     enableRawMode();
     char car = ' ';
 
+    Player player = Player(0.0, 0.0);
+
     while (true) {
         
         std::cout << "\033[3J\033[H\033[2J";
@@ -70,11 +75,19 @@ int main() {
         std::cout << "Width: " << width << " Height: " << height << '\n';
         std::cout << "Press keys (press 'q' to quit)\n";
         std::cout << "You pressed: " << car << std::endl;
+        std::cout << "Position: " << setprecision(4) << player.x << " " << setprecision(4) << player.y << endl;
+        std::cout << "Angle: " << player.angle << endl;
         if (kbhit()) {
             char c = getch();
             car = c;
             std::cout << "You pressed: " << c << std::endl;
             if (c == 'q') break;
+            else if (c == 's') player.move(Direction::FORWARD);
+            else if (c == 'w') player.move(Direction::BACKWARD);
+            else if (c == 'a') player.move(Direction::LEFT);
+            else if (c == 'd') player.move(Direction::RIGHT);
+            else if (c == 'C') player.turn(Direction::LEFT);
+            else if (c == 'D') player.turn(Direction::RIGHT);
         }
 
         for (int i = 0; i < height; i++) {
@@ -84,7 +97,7 @@ int main() {
             cout << '\n';
         }
         num++;
-        usleep(10000); // small delay to reduce CPU usage
+        usleep(5000); // small delay to reduce CPU usage
     }
 
     disableRawMode();
