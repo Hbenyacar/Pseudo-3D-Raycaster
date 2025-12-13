@@ -85,8 +85,8 @@ int main() {
             car = c;
             std::cout << "You pressed: " << c << std::endl;
             if (c == 'q') break;
-            else if (c == 's') player.move(Direction::FORWARD);
-            else if (c == 'w') player.move(Direction::BACKWARD);
+            else if (c == 'w') player.move(Direction::FORWARD);
+            else if (c == 's') player.move(Direction::BACKWARD);
             else if (c == 'a') player.move(Direction::LEFT);
             else if (c == 'd') player.move(Direction::RIGHT);
             else if (c == 'C') player.turn(Direction::LEFT);
