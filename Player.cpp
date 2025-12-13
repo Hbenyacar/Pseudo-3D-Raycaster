@@ -4,7 +4,7 @@
 #define ld long double
 
 #define TURN_SPEED 5
-#define MOVE_SPEED .1
+#define MOVE_SPEED 1
 #define POS_DIR 1
 #define NEG_DIR -1
 #define EPSILON 1e-10

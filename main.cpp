@@ -8,8 +8,20 @@
 #include <iomanip>
 #include "Direction.h"
 #include "Player.h"
+#include "Map.h"
 
 using namespace std;
+
+vector<vector<int>> MAP = {
+                            {1, 1, 1, 1, 1, 1, 1, 1},
+                            {1, 0, 0, 0, 0, 0, 0, 1},
+                            {1, 0, 0, 0, 0, 0, 0, 1},
+                            {1, 0, 0, 0, 0, 0, 0, 1},
+                            {1, 0, 0, 0, 0, 0, 0, 1},
+                            {1, 0, 0, 0, 0, 0, 0, 1},
+                            {1, 0, 0, 0, 0, 0, 0, 1},
+                            {1, 1, 1, 1, 1, 1, 1, 1}
+                            };
 
 termios orig_termios;
 
@@ -47,23 +59,13 @@ char getch() {
 
 int main() {
 
-    vector<int> map = {
-                    1, 1, 1, 1, 1, 1, 1, 1,
-                    1, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 1,
-                    1, 0, 0, 0, 0, 0, 0, 1,
-                    1, 1, 1, 1, 1, 1, 1, 1,
-                };
-
     int num = 0;
 
     enableRawMode();
     char car = ' ';
 
     Player player = Player(0.0, 0.0);
+    Map map = Map(player, MAP);
 
     while (true) {
         
@@ -71,12 +73,13 @@ int main() {
         struct winsize w;
         ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
         int width = w.ws_col;
-        int height = w.ws_row - 10;
+        int height = w.ws_row - 20;
         std::cout << "Width: " << width << " Height: " << height << '\n';
         std::cout << "Press keys (press 'q' to quit)\n";
         std::cout << "You pressed: " << car << std::endl;
         std::cout << "Position: " << setprecision(4) << player.x << " " << setprecision(4) << player.y << endl;
         std::cout << "Angle: " << player.angle << endl;
+        //map.draw();
         if (kbhit()) {
             char c = getch();
             car = c;
