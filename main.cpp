@@ -8,7 +8,6 @@
 #include <iomanip>
 #include "Direction.h"
 #include "Player.h"
-#include "Map.h"
 
 using namespace std;
 
@@ -64,8 +63,8 @@ int main() {
     enableRawMode();
     char car = ' ';
 
-    Player player = Player(0.0, 0.0);
-    Map map = Map(player, MAP);
+    Map map = Map(MAP);
+    Player player = Player(3, 3, map);
 
     while (true) {
         
@@ -79,7 +78,7 @@ int main() {
         std::cout << "You pressed: " << car << std::endl;
         std::cout << "Position: " << setprecision(4) << player.x << " " << setprecision(4) << player.y << endl;
         std::cout << "Angle: " << player.angle << endl;
-        //map.draw();
+        map.draw(player);
         if (kbhit()) {
             char c = getch();
             car = c;

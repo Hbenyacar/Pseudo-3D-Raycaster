@@ -12,8 +12,8 @@
 #define L_TURN 1
 #define R_TURN 2
 
-Player::Player (ld startX, ld startY)
-    : x(startX), y(startY), angle(0) {}
+Player::Player (ld startX, ld startY, Map map)
+    : x(startX), y(startY), angle(0), map(map) {}
 
 ld Player::move(Direction direction) {
     switch (direction)
@@ -56,12 +56,14 @@ void Player::setCoord(int dir, int turn) {
 
 ld Player::calcX() {
     ld radians = angle * (M_PI / 180);
-    return (ld) MOVE_SPEED * cos(radians);
+    ld x = (ld) MOVE_SPEED * cos(radians);
+    return x;
 }
 
 ld Player::calcY() {
     ld radians = angle * (M_PI / 180);
-    return (ld) MOVE_SPEED * sin(radians);
+    ld y = (ld) MOVE_SPEED * sin(radians);
+    return y;
 }
 
 void Player::epsilonClamp() {

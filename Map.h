@@ -1,14 +1,17 @@
+#pragma once
 #include <vector>
-#include "Player.h"
 
+#define ld long double
 using namespace std;
+
+struct Player;
 
 struct Map {
 
-    Player player;
     vector<vector<int>> grid;
 
-    Map(Player player, vector<vector<int>> grid);
-    void draw();
+    Map(vector<vector<int>> grid);
+    void draw(Player player);
+    string arrow(Player player);
     
 };

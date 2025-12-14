@@ -1,5 +1,6 @@
 #pragma once
 #include "Direction.h"
+#include "Map.h"
 #define ld long double
 
 struct Player
@@ -7,8 +8,9 @@ struct Player
     ld x;
     ld y;
     ld angle;
+    Map map;
 
-   Player(ld startX, ld startY);
+   Player(ld startX, ld startY, Map map);
 
    ld move(Direction direction);
    ld calcX();
