@@ -8,9 +8,10 @@ struct Player
     ld x;
     ld y;
     ld angle;
+    ld fov;
     Map map;
 
-   Player(ld startX, ld startY, Map map);
+   Player(ld startX, ld startY, Map map, ld fov);
 
    ld move(Direction direction);
    ld calcX();

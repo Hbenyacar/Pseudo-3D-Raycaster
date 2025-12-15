@@ -12,8 +12,8 @@
 #define L_TURN 1
 #define R_TURN 2
 
-Player::Player (ld startX, ld startY, Map map)
-    : x(startX), y(startY), angle(0), map(map) {}
+Player::Player (ld startX, ld startY, Map map, ld fov)
+    : x(startX), y(startY), angle(0), map(map), fov(fov) {}
 
 ld Player::move(Direction direction) {
     switch (direction)

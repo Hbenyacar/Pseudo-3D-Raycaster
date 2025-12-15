@@ -8,8 +8,12 @@
 #include <iomanip>
 #include "Direction.h"
 #include "Player.h"
+#include "Ray.h"
+#include "Wall.h"
 
 using namespace std;
+
+#define FOV 60 // in degrees
 
 vector<vector<int>> MAP = {
                             {1, 1, 1, 1, 1, 1, 1, 1},
@@ -64,7 +68,9 @@ int main() {
     char car = ' ';
 
     Map map = Map(MAP);
-    Player player = Player(3, 3, map);
+    Player player = Player(3, 3, map, FOV);
+    ld projectedHeight = 0;
+    ld dist = 0;
 
     while (true) {
         
@@ -78,6 +84,8 @@ int main() {
         std::cout << "You pressed: " << car << std::endl;
         std::cout << "Position: " << setprecision(4) << player.x << " " << setprecision(4) << player.y << endl;
         std::cout << "Angle: " << player.angle << endl;
+        std::cout << "projected height: " << projectedHeight << endl;
+        std::cout << "dist: " << dist << endl;
         map.draw(player);
         if (kbhit()) {
             char c = getch();
@@ -90,6 +98,13 @@ int main() {
             else if (c == 'd') player.move(Direction::RIGHT);
             else if (c == 'C') player.turn(Direction::LEFT);
             else if (c == 'D') player.turn(Direction::RIGHT);
+            else if (c == 'r') {
+                Ray ray = Ray(player.angle, player.x, player.y, map.grid); 
+                Wall wall = ray.hitWall();
+                dist = wall.distToPlayer;
+                char c = wall.character();
+                projectedHeight = wall.projectedHeight(player.fov, width);
+            }
         }
 
         for (int i = 0; i < height; i++) {
