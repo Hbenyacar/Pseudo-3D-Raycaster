@@ -10,8 +10,10 @@
 #include "Player.h"
 #include "Ray.h"
 #include "Wall.h"
+#include "globals.h"
 
 using namespace std;
+extern bool glo;
 
 #define FOV 60 // in degrees
 
@@ -20,7 +22,7 @@ vector<vector<int>> MAP = {
                             {1, 0, 0, 0, 0, 0, 0, 1},
                             {1, 0, 0, 0, 0, 0, 0, 1},
                             {1, 0, 0, 0, 0, 0, 0, 1},
-                            {1, 0, 0, 0, 0, 0, 0, 1},
+                            {1, 0, 0, 0, 1, 0, 0, 1},
                             {1, 0, 0, 0, 0, 0, 0, 1},
                             {1, 0, 0, 0, 0, 0, 0, 1},
                             {1, 1, 1, 1, 1, 1, 1, 1}
@@ -99,21 +101,25 @@ int main() {
             else if (c == 'C') player.turn(Direction::LEFT);
             else if (c == 'D') player.turn(Direction::RIGHT);
             else if (c == 'r') {
+                globalVariable = 1;
                 Ray ray = Ray(player.angle, player.x, player.y, map.grid); 
-                Wall wall = ray.hitWall();
+                Wall wall = ray.castRay();
                 dist = wall.distToPlayer;
                 char c = wall.character();
-                projectedHeight = wall.projectedHeight(player.fov, width);
+                projectedHeight = wall.projectedHeight(player.fov, width, height);
+                globalVariable = 0;
             }
         }
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                cout << 1;
-            }
-            cout << '\n';
-        }
-        num++;
+        player.drawView(width, height);
+
+        // for (int i = 0; i < height; i++) {
+        //     for (int j = 0; j < width; j++) {
+        //         cout << i;
+        //     }
+        //     cout << '\n';
+        // }
+        // num++;
         usleep(5000); // small delay to reduce CPU usage
     }
 

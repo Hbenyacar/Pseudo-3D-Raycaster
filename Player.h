@@ -19,4 +19,5 @@ struct Player
    ld turn(Direction direction);
    void setCoord(int dir, int turn);
    void epsilonClamp();
+   void drawView(ld screenWidth, ld screenHeight); 
 };

@@ -2,6 +2,7 @@
 #include <cmath>
 #include "Ray.h"
 #include "Wall.h"
+#include "globals.h"
 
 #include <fstream>
 
@@ -12,18 +13,21 @@ using namespace std;
 #define CELL_SIZE 1
 #define HORIZONTAL WallType::HORIZONTAL
 #define VERTICAL WallType::VERTICAL
-#define WALL_HEIGHT 1
+#define WALL_HEIGHT .2
+#define EPSILON 1e-10
 
 void debugLog(const std::string& msg) {
-    static std::ofstream debugFile("debug.log", std::ios::app);
+    if (globalVariable == 1) {
+        static std::ofstream debugFile("debug.log", std::ios::app);
     debugFile << msg << '\n';
     debugFile.flush();  // ← REQUIRED for real-time logging
+    }
 }
 
 Ray::Ray(ld angle, ld startX, ld startY, vector<vector<int>> grid) 
     : angle(angle), startX(startX), startY(startY), grid(grid) {}
 
-Wall Ray::hitWall() {
+Wall Ray::castRay() {
     ld horizontal = distHoriWall();
     ld vertical = distVertWall();
 
@@ -44,7 +48,7 @@ ld Ray::distHoriWall() {
 
     ld radians = angle * (M_PI / 180);
 
-    if (sin(radians) == 0) {
+    if (abs(sin(radians)) < EPSILON) {
         return INT_MAX;
     }
 
@@ -52,7 +56,7 @@ ld Ray::distHoriWall() {
     bool facingDown = !facingUp;
 
     if (facingUp) { yn = ceil(startY) - startY; y = ceil(startY);}
-    else { yn = startY - floor(startY); y = floor(startY); }
+    else { yn = floor(startY) - startY; y = floor(startY); }
 
     // to check below grid[x][y-1] if ray is facing down
 
@@ -91,7 +95,7 @@ ld Ray::distVertWall() {
 
     ld radians = angle * (M_PI / 180);
 
-    if (cos(radians) == 0) {
+    if (abs(cos(radians)) < EPSILON) {
         return INT_MAX;
     }
 
@@ -99,7 +103,7 @@ ld Ray::distVertWall() {
     bool facingLeft = !facingRight;
 
     if (facingRight) { xn = ceil(startX) - startX; x = ceil(startX);}
-    else { xn = startX - floor(startX); x = floor(startX); }
+    else { xn = floor(startX) - startX; x = floor(startX); }
 
     // to check below grid[x][y-1] if ray is facing down
 
@@ -118,7 +122,7 @@ ld Ray::distVertWall() {
     while (true) {
         if (outOfBounds(x - checkLower, y)) {break;}
         if (grid[x - checkLower][floor(y)] == 1) {
-            debugLog(to_string(floor(x)) + " " + to_string(y - checkLower));
+            debugLog(to_string(x - checkLower) + " " + to_string(floor(y)));
             debugLog("Total Distance VERT: " + to_string(totalDist));
             break;
         }

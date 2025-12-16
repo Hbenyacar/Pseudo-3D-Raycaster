@@ -11,6 +11,7 @@ struct Wall {
 
     Wall(WallType type, ld distToPlayer, ld height);
     
-    ld projectedHeight(ld FOV, ld screenWidth);
+    ld projectedHeight(ld FOV, ld screenWidth, ld screenHeight);
     char character();
+    int adjustHeight(ld projectedHeight, ld screenHeight);
 };

@@ -14,5 +14,5 @@ struct Ray {
     ld distHoriWall();
     ld distVertWall();
     bool outOfBounds(ld x, ld y);
-    Wall hitWall();
+    Wall castRay();
 };

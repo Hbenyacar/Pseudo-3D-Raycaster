@@ -13,5 +13,6 @@ struct Map {
     Map(vector<vector<int>> grid);
     void draw(Player player);
     string arrow(Player player);
-    
+    void drawWalls(ld width, ld height, Player player);
+    void print(vector<vector<char>> view);
 };

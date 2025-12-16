@@ -1,7 +1,7 @@
 CXX = clang++
 CXXFLAGS = -std=c++17 -Wall
 
-SRCS = main.cpp Player.cpp Map.cpp Ray.cpp Wall.cpp
+SRCS = main.cpp Player.cpp Map.cpp Ray.cpp Wall.cpp globals.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 TARGET = raycaster

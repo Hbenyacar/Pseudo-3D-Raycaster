@@ -70,3 +70,7 @@ void Player::epsilonClamp() {
     if (abs(x) < EPSILON) {x = 0;}
     if (abs(y) < EPSILON) {y = 0;}
 }
+
+void Player::drawView(ld screenWidth, ld screenHeight) {
+    map.drawWalls(screenWidth, screenHeight, *this);
+}
